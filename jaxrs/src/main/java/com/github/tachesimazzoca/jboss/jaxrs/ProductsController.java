@@ -12,10 +12,16 @@ public class ProductsController {
     private ProductService productService;
 
     @GET
+    @Path("/")
+    @Produces("application/json")
+    public ApiResponse<Product> findAll() {
+        return new ApiResponse(productService.getProducts());
+    }
+
+    @GET
     @Path("/{id: [0-9]+}")
     @Produces("application/json")
-    public String findById(@PathParam("id") Long id) {
-        Product product = productService.getProduct(id);
-        return "{\"entries\":[" + product.toJSON() + "]}";
+    public ApiResponse<Product> findById(@PathParam("id") Long id) {
+        return new ApiResponse(productService.getProduct(id));
     }
 }
